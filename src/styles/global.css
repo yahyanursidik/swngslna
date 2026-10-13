@@ -1,0 +1,271 @@
+@import 'tailwindcss';
+
+/*
+ * STS design tokens (PRD §12).
+ * Contrast notes (against paper #F7F7F3 unless stated):
+ *   navy  #142933  ~14.9:1  body text, dark surfaces
+ *   muted #4A5B62  ~6.6:1   secondary text
+ *   teal-ink #3B6D68 ~5.5:1 accent text, buttons (paper text on it ~5.5:1)
+ *   teal  #477F7A  ~4.3:1   large text / graphics only
+ *   teal-soft #9CCBC5 on navy ~9:1  accent text on dark surfaces
+ *   mist / sand: separators and rare highlights, never body text on paper
+ */
+@theme {
+  --font-sans:
+    'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+
+  --color-navy: #142933;
+  --color-navy-deep: #0e1f27;
+  --color-navy-soft: #1d3641;
+  --color-paper: #f7f7f3;
+  --color-paper-alt: #eef1ec;
+  --color-white: #ffffff;
+  --color-muted: #4a5b62;
+  --color-teal: #477f7a;
+  --color-teal-ink: #3b6d68;
+  --color-teal-deep: #2f5955;
+  --color-teal-soft: #9ccbc5;
+  --color-mist: #beced0;
+  --color-mist-dim: #a9bcc0;
+  --color-line: #dbe3e2;
+  --color-sand: #daaa72;
+
+  --container-content: 75rem; /* ~1200px */
+
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--line-height: 1.4;
+
+  --radius-card: 0.75rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    background-color: var(--color-paper);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01' on;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.65;
+    background-color: var(--color-paper);
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Anchor offset for the sticky header (FR-04). */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-mist);
+    color: var(--color-navy);
+  }
+
+  /* Visible focus for every interactive element (FR-12, WCAG 2.4.7 / 2.4.11). */
+  :focus-visible {
+    outline: 3px solid var(--color-teal-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .surface-dark :focus-visible {
+    outline-color: var(--color-teal-soft);
+  }
+}
+
+@layer components {
+  .container-content {
+    width: 100%;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .section {
+      padding-block: 7rem;
+    }
+  }
+
+  .surface-dark {
+    background-color: var(--color-navy);
+    color: var(--color-paper);
+  }
+
+  .eyebrow {
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    line-height: var(--text-eyebrow--line-height);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-teal-ink);
+  }
+
+  .surface-dark .eyebrow {
+    color: var(--color-teal-soft);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.375rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.25;
+    text-decoration: none;
+    transition:
+      background-color 180ms var(--ease-out-soft),
+      color 180ms var(--ease-out-soft),
+      border-color 180ms var(--ease-out-soft),
+      transform 180ms var(--ease-out-soft);
+  }
+
+  .btn svg {
+    flex: none;
+    transition: transform 180ms var(--ease-out-soft);
+  }
+
+  .btn:hover svg.icon-shift {
+    transform: translateX(3px);
+  }
+
+  .btn-primary {
+    background-color: var(--color-teal-ink);
+    color: var(--color-white);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-teal-deep);
+  }
+
+  .btn-secondary {
+    border: 1.5px solid var(--color-navy);
+    color: var(--color-navy);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-navy);
+    color: var(--color-paper);
+  }
+
+  .surface-dark .btn-primary {
+    background-color: var(--color-paper);
+    color: var(--color-navy);
+  }
+
+  .surface-dark .btn-primary:hover {
+    background-color: var(--color-teal-soft);
+  }
+
+  .surface-dark .btn-secondary {
+    border-color: var(--color-mist);
+    color: var(--color-paper);
+  }
+
+  .surface-dark .btn-secondary:hover {
+    background-color: var(--color-paper);
+    color: var(--color-navy);
+  }
+
+  .link-underline {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: text-decoration-color 160ms ease;
+  }
+
+  .link-underline:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* Hero diagram draw-in. Static for reduced motion (FR-14). */
+@media (prefers-reduced-motion: no-preference) {
+  .draw-path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 1.6s var(--ease-out-soft) 0.2s forwards;
+  }
+
+  .fade-node {
+    opacity: 0;
+    animation: fade-in 0.5s var(--ease-out-soft) forwards;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

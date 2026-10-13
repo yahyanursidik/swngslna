@@ -1,0 +1,30 @@
+---
+/**
+ * Fallback for `/`. The real redirect is a host-side 301 to /id/ (see public/_redirects,
+ * vercel.json, netlify.toml). This page only renders if that rule is missing, e.g. in
+ * `astro preview`, and is never indexed.
+ */
+import { SITE } from '@/config/site';
+const target = '/id/';
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{SITE.shortName} — {SITE.fullName}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={new URL(target, SITE.url).href} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body style="font-family: system-ui, sans-serif; padding: 2rem; background: #f7f7f3; color: #142933;">
+    <p>
+      <a href="/id/">Bahasa Indonesia</a> ·{' '}
+      <a href="/en/" hreflang="en" lang="en">
+        English
+      </a>
+    </p>
+  </body>
+</html>

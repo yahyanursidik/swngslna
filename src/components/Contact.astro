@@ -1,0 +1,127 @@
+---
+import Mail from '@lucide/astro/icons/mail';
+import MessageCircle from '@lucide/astro/icons/message-circle';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import CircleAlert from '@lucide/astro/icons/circle-alert';
+import SectionHeading from './ui/SectionHeading.astro';
+import { SITE, isContactReady } from '@/config/site';
+import { SECTION, type Dictionary } from '@/i18n';
+import { emailHref, whatsappDisplay, whatsappHref } from '@/lib/contact';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { contact } = t;
+const mailto = emailHref(t);
+const wa = whatsappHref(t);
+const waLabel = whatsappDisplay();
+---
+
+<section id={SECTION.contact} class="section surface-dark" aria-labelledby="contact-title">
+  <div class="container-content grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+    <div>
+      <SectionHeading
+        id="contact-title"
+        eyebrow={contact.eyebrow}
+        title={contact.title}
+        lead={contact.lead}
+      />
+
+      {isContactReady() ? (
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {mailto && (
+            <a href={mailto} class="btn btn-primary" data-cta="email">
+              <Mail class="size-5" aria-hidden="true" />
+              {contact.emailCta}
+            </a>
+          )}
+          {wa && (
+            <a
+              href={wa}
+              class="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta="whatsapp"
+            >
+              <MessageCircle class="size-5" aria-hidden="true" />
+              {contact.whatsappCta}
+              <ArrowUpRight class="size-4 opacity-70" aria-hidden="true" />
+              <span class="sr-only">{t.a11y.opensInNewTab}</span>
+            </a>
+          )}
+        </div>
+      ) : (
+        <p
+          class="mt-10 flex max-w-xl gap-3 rounded-card border border-sand/60 p-5 text-[0.9375rem] text-mist"
+          role="note"
+          data-contact-pending
+        >
+          <CircleAlert class="mt-0.5 size-5 flex-none text-sand" aria-hidden="true" />
+          <span>{contact.pendingNote}</span>
+        </p>
+      )}
+
+      <dl class="mt-12 grid gap-6 border-t border-white/15 pt-8 text-[0.9375rem] sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <dt class="text-mist-dim">{contact.companyLabel}</dt>
+          <dd class="mt-1 font-semibold">{SITE.legalName}</dd>
+          {SITE.legal.showAhu && (
+            <dd class="mt-1 text-sm text-mist">
+              {t.about.legalLabel}: <span class="break-words">{SITE.legal.ahuNumber}</span>
+            </dd>
+          )}
+        </div>
+        {mailto && (
+          <div>
+            <dt class="text-mist-dim">{contact.emailLabel}</dt>
+            <dd class="mt-1">
+              <a href={mailto} class="link-underline font-semibold break-all">
+                {SITE.contact.email}
+              </a>
+            </dd>
+          </div>
+        )}
+        {wa && (
+          <div>
+            <dt class="text-mist-dim">{contact.whatsappLabel}</dt>
+            <dd class="mt-1">
+              <a
+                href={wa}
+                class="link-underline font-semibold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {waLabel}
+                <span class="sr-only">{t.a11y.opensInNewTab}</span>
+              </a>
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+
+    <aside
+      class="self-start rounded-card border border-white/12 bg-navy-soft/60 p-6 sm:p-8"
+      aria-labelledby="contact-prep-title"
+    >
+      <h3 id="contact-prep-title" class="text-lg leading-snug font-bold">
+        {contact.prepTitle}
+      </h3>
+      <ol class="mt-6 space-y-4" role="list">
+        {contact.prepItems.map((item, i) => (
+          <li class="flex gap-4">
+            <span
+              class="inline-flex size-7 flex-none items-center justify-center rounded-full bg-white/10 text-sm font-bold text-teal-soft tabular-nums"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <span class="pt-0.5 text-mist">{item}</span>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  </div>
+</section>

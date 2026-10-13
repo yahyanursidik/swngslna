@@ -1,0 +1,53 @@
+---
+import GraduationCap from '@lucide/astro/icons/graduation-cap';
+import Landmark from '@lucide/astro/icons/landmark';
+import Users from '@lucide/astro/icons/users';
+import Scale from '@lucide/astro/icons/scale';
+import SectionHeading from './ui/SectionHeading.astro';
+import { SECTION, type Dictionary, type IndustryIcon } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { industries } = t;
+
+const icons: Record<IndustryIcon, typeof Users> = {
+  'graduation-cap': GraduationCap,
+  landmark: Landmark,
+  users: Users,
+  scale: Scale,
+};
+---
+
+<section id={SECTION.industries} class="section" aria-labelledby="industries-title">
+  <div class="container-content">
+    <SectionHeading
+      id="industries-title"
+      eyebrow={industries.eyebrow}
+      title={industries.title}
+      lead={industries.lead}
+    />
+
+    <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" role="list">
+      {industries.items.map((item) => {
+        const Icon = icons[item.icon];
+        return (
+          <li class="flex flex-col rounded-card border border-line bg-white p-6">
+            <Icon class="size-7 text-teal-ink" aria-hidden="true" stroke-width={1.6} />
+            <h3 class="mt-6 text-xl font-bold">{item.title}</h3>
+            <p class="mt-2 flex-1 text-[0.9375rem] text-muted">{item.text}</p>
+            <ul class="mt-6 flex flex-wrap gap-2" role="list">
+              {item.examples.map((ex) => (
+                <li class="rounded-md bg-paper-alt px-2.5 py-1 text-[0.8125rem] font-medium">
+                  {ex}
+                </li>
+              ))}
+            </ul>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>

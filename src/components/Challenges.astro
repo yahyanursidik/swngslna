@@ -1,0 +1,45 @@
+---
+import SectionHeading from './ui/SectionHeading.astro';
+import { SECTION, type Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { challenges } = t;
+---
+
+<section id={SECTION.challenges} class="section bg-paper-alt" aria-labelledby="challenges-title">
+  <div class="container-content">
+    <SectionHeading
+      id="challenges-title"
+      eyebrow={challenges.eyebrow}
+      title={challenges.title}
+      lead={challenges.lead}
+    />
+
+    <ol
+      class="mt-12 grid gap-x-10 border-t border-navy/15 sm:grid-cols-2 lg:grid-cols-3"
+      role="list"
+    >
+      {challenges.items.map((item, i) => (
+        <li class="border-b border-navy/15 py-7">
+          <div class="flex items-baseline gap-4">
+            <span class="text-sm font-bold text-teal-ink tabular-nums" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <h3 class="text-xl leading-snug font-bold">{item.title}</h3>
+              <p class="mt-2 text-muted">{item.text}</p>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-10 max-w-3xl border-l-[3px] border-sand pl-5 text-lg leading-relaxed font-semibold lg:text-xl">
+      {challenges.closing}
+    </p>
+  </div>
+</section>

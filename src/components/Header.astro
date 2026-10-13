@@ -1,0 +1,238 @@
+---
+import Menu from '@lucide/astro/icons/menu';
+import X from '@lucide/astro/icons/x';
+import Wordmark from './ui/Wordmark.astro';
+import { SITE } from '@/config/site';
+import { LOCALES, LOCALE_META, SECTION, homePath, type Dictionary } from '@/i18n';
+import { getNavItems } from '@/lib/nav';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const navItems = getNavItems(t);
+const current = t.locale;
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line/80 bg-paper/95 backdrop-blur-sm supports-[backdrop-filter]:bg-paper/85"
+  data-site-header
+>
+  <a
+    href="#main"
+    class="sr-only-focusable absolute top-3 left-3 z-[60] rounded-md bg-navy px-4 py-2 text-sm font-semibold text-paper"
+  >
+    {t.a11y.skipToContent}
+  </a>
+
+  <div class="container-content flex h-[4.5rem] items-center justify-between gap-6">
+    <a
+      href={`#${SECTION.top}`}
+      class="group flex items-baseline gap-3 rounded-sm text-navy no-underline"
+      aria-label={t.a11y.home}
+    >
+      <Wordmark class="text-[1.75rem] leading-none" />
+      <span class="hidden text-sm font-medium text-muted sm:inline lg:hidden xl:inline">
+        {SITE.fullName}
+      </span>
+    </a>
+
+    <nav aria-label={t.a11y.primaryNav} class="flex items-center">
+      <button
+        type="button"
+        class="nav-toggle -mr-2 inline-flex size-11 items-center justify-center rounded-full text-navy hover:bg-paper-alt lg:hidden"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-toggle
+        data-label-open={t.a11y.openMenu}
+        data-label-close={t.a11y.closeMenu}
+      >
+        <span class="sr-only" data-menu-label>
+          {t.a11y.openMenu}
+        </span>
+        <Menu class="icon-open size-6" aria-hidden="true" />
+        <X class="icon-close hidden size-6" aria-hidden="true" />
+      </button>
+
+      <div
+        id="site-menu"
+        class="site-menu absolute inset-x-0 top-full border-b border-line bg-paper lg:static lg:border-0 lg:bg-transparent"
+        data-menu
+      >
+        <div class="container-content flex flex-col gap-1 py-4 lg:flex-row lg:items-center lg:gap-1 lg:p-0">
+          <ul class="-mx-3 flex flex-col lg:mx-0 lg:flex-row lg:items-center lg:gap-1" role="list">
+            {navItems.map((item) => (
+              <li>
+                <a
+                  href={`#${item.id}`}
+                  class="nav-link block rounded-md px-3 py-3 text-base font-semibold text-navy/80 hover:text-navy lg:py-2 lg:text-[0.9375rem]"
+                  data-nav-link={item.id}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div
+            class="mt-3 flex items-center gap-1 border-t border-line pt-4 lg:mt-0 lg:ml-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-4"
+            role="group"
+            aria-label={t.a11y.languageSwitch}
+          >
+            {LOCALES.map((l) =>
+              l === current ? (
+                <span
+                  class="rounded-full bg-navy px-3 py-1.5 text-sm font-bold text-paper"
+                  aria-current="true"
+                  lang={LOCALE_META[l].htmlLang}
+                >
+                  <span class="sr-only">{LOCALE_META[l].name}</span>
+                  <span aria-hidden="true">{LOCALE_META[l].label}</span>
+                </span>
+              ) : (
+                <a
+                  href={homePath(l)}
+                  hreflang={LOCALE_META[l].hreflang}
+                  lang={LOCALE_META[l].htmlLang}
+                  class="rounded-full px-3 py-1.5 text-sm font-bold text-navy/75 hover:bg-paper-alt hover:text-navy"
+                  data-lang-switch
+                  title={t.a11y.switchToLanguage}
+                >
+                  <span class="sr-only">{LOCALE_META[l].name}</span>
+                  <span aria-hidden="true">{LOCALE_META[l].label}</span>
+                </a>
+              ),
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-link[aria-current='location'] {
+    color: var(--color-navy);
+    box-shadow: inset 0 -2px 0 var(--color-teal);
+  }
+
+  @media (max-width: 63.999rem) {
+    /* Without JS the menu stays open so navigation remains usable. */
+    :global(.js) .site-menu:not([data-open]) {
+      display: none;
+    }
+
+    .site-menu {
+      max-height: calc(100dvh - 4.5rem);
+      overflow-y: auto;
+    }
+
+    .nav-link[aria-current='location'] {
+      box-shadow: inset 3px 0 0 var(--color-teal);
+    }
+
+    :global(.js) .site-menu {
+      box-shadow: 0 18px 30px -18px rgb(20 41 51 / 0.35);
+    }
+  }
+
+  :global(.no-js) .nav-toggle {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded='true'] .icon-open {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded='true'] .icon-close {
+    display: block;
+  }
+</style>
+
+<script>
+  const SECTION_HASH = /^#[a-z][a-z0-9-]*$/;
+  const desktop = window.matchMedia('(min-width: 64rem)');
+
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const label = toggle?.querySelector<HTMLElement>('[data-menu-label]');
+
+  const setOpen = (open: boolean, { restoreFocus = false } = {}) => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    menu.toggleAttribute('data-open', open);
+    if (label) {
+      label.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
+    }
+    if (!open && restoreFocus) toggle.focus();
+  };
+
+  const isOpen = () => toggle?.getAttribute('aria-expanded') === 'true';
+
+  toggle?.addEventListener('click', () => setOpen(!isOpen()));
+
+  // Close on link selection (FR-03).
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as Element).closest('a')) setOpen(false);
+  });
+
+  // Close on Escape and return focus to the toggle.
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen()) setOpen(false, { restoreFocus: true });
+  });
+
+  // Close when tapping outside the header.
+  document.addEventListener('click', (event) => {
+    if (isOpen() && !(event.target as Element).closest('[data-site-header]')) setOpen(false);
+  });
+
+  desktop.addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+
+  // Language switch keeps the equivalent section (FR-02). Section ids are shared by both locales.
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang-switch]').forEach((link) => {
+    const base = link.getAttribute('href') ?? '/';
+    const sync = () => {
+      const { hash } = window.location;
+      link.href = SECTION_HASH.test(hash) && document.querySelector(hash) ? base + hash : base;
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    link.addEventListener('focus', sync);
+    link.addEventListener('pointerdown', sync);
+  });
+
+  // Active section indication.
+  const links = new Map<string, HTMLAnchorElement>();
+  document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]').forEach((link) => {
+    links.set(link.dataset.navLink ?? '', link);
+  });
+
+  const sections = [...links.keys()]
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if ('IntersectionObserver' in window && sections.length) {
+    const visible = new Set<string>();
+    const update = () => {
+      const active = sections.find((s) => visible.has(s.id))?.id;
+      links.forEach((link, id) => {
+        if (id === active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        });
+        update();
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

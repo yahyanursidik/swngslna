@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build && npm run verify"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Production context is detected automatically (CONTEXT=production) → indexable build.
+# Deploy previews and branch deploys are emitted with noindex + disallow-all robots.txt.

@@ -1,0 +1,12 @@
+{
+  "name": "STS — Sawangsulna Teknologi Studio",
+  "short_name": "STS.",
+  "start_url": "/id/",
+  "display": "browser",
+  "background_color": "#f7f7f3",
+  "theme_color": "#142933",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

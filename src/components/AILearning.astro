@@ -1,0 +1,64 @@
+---
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import Info from '@lucide/astro/icons/info';
+import SectionHeading from './ui/SectionHeading.astro';
+import { SECTION, type Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { ai } = t;
+---
+
+<section id={SECTION.ai} class="section bg-paper-alt" aria-labelledby="ai-title">
+  <div class="container-content">
+    <SectionHeading id="ai-title" eyebrow={ai.eyebrow} title={ai.title} lead={ai.lead} />
+
+    <div class="mt-14 grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div>
+        <h3 class="text-xl font-bold">{ai.useCasesTitle}</h3>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2" role="list">
+          {ai.useCases.map((item) => (
+            <li class="rounded-card border border-line bg-paper p-5">
+              <h4 class="font-bold">{item.title}</h4>
+              <p class="mt-1.5 text-[0.9375rem] text-muted">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 flex gap-3 text-[0.9375rem] text-muted">
+          <Info class="mt-0.5 size-5 flex-none text-teal-ink" aria-hidden="true" />
+          <span>{ai.conditionalNote}</span>
+        </p>
+      </div>
+
+      <div>
+        <div class="rounded-card bg-navy p-6 text-paper sm:p-8 surface-dark">
+          <h3 class="flex items-center gap-3 text-xl font-bold">
+            <ShieldCheck class="size-6 text-teal-soft" aria-hidden="true" />
+            {ai.guardrailsTitle}
+          </h3>
+          <ul class="mt-6 divide-y divide-white/12" role="list">
+            {ai.guardrails.map((g) => (
+              <li class="py-4 first:pt-0 last:pb-0">
+                <h4 class="font-bold">{g.title}</h4>
+                <p class="mt-1 text-[0.9375rem] text-mist">{g.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <aside
+          class="mt-6 rounded-card border border-sand/70 bg-paper p-5"
+          aria-labelledby="ai-terms-title"
+        >
+          <h3 id="ai-terms-title" class="text-sm font-bold">
+            {ai.terminology.title}
+          </h3>
+          <p class="mt-1.5 text-[0.9375rem] text-muted">{ai.terminology.text}</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class:list={['font-extrabold tracking-[-0.04em]', className]} aria-hidden="true">
+  STS<span class="text-teal">.</span>
+</span>

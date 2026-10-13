@@ -1,0 +1,129 @@
+---
+import ChartLine from '@lucide/astro/icons/chart-line';
+import Compass from '@lucide/astro/icons/compass';
+import Layers from '@lucide/astro/icons/layers';
+import PenTool from '@lucide/astro/icons/pen-tool';
+import Sparkles from '@lucide/astro/icons/sparkles';
+import Check from '@lucide/astro/icons/check';
+import SectionHeading from './ui/SectionHeading.astro';
+import { SECTION, type Dictionary, type ServiceIcon } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { expertise } = t;
+
+const icons: Record<ServiceIcon, typeof Compass> = {
+  compass: Compass,
+  layers: Layers,
+  'pen-tool': PenTool,
+  'chart-line': ChartLine,
+  sparkles: Sparkles,
+};
+---
+
+<section id={SECTION.expertise} class="section" aria-labelledby="expertise-title">
+  <div class="container-content">
+    <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <SectionHeading
+        id="expertise-title"
+        eyebrow={expertise.eyebrow}
+        title={expertise.title}
+        lead={expertise.lead}
+      />
+      <div class="hidden lg:block">
+        <ol class="space-y-1 text-sm" role="list">
+          {expertise.services.map((s) => (
+            <li>
+              <a
+                href={`#${s.id}`}
+                class="flex gap-3 rounded-sm py-1 text-muted no-underline hover:text-navy"
+              >
+                <span class="font-bold text-teal-ink tabular-nums">{s.code}</span>
+                {s.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="mt-14 space-y-6">
+      {expertise.services.map((service) => {
+        const Icon = icons[service.icon];
+        return (
+          <article
+            id={service.id}
+            class="rounded-card border border-line bg-white p-6 sm:p-8 lg:p-10"
+            aria-labelledby={`${service.id}-title`}
+          >
+            <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+              <div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex size-12 flex-none items-center justify-center rounded-full bg-paper-alt text-teal-ink">
+                    <Icon class="size-6" aria-hidden="true" stroke-width={1.75} />
+                  </span>
+                  <span class="text-sm font-bold tracking-[0.12em] text-muted tabular-nums">
+                    {service.code} / 05
+                  </span>
+                </div>
+                <h3
+                  id={`${service.id}-title`}
+                  class="mt-6 text-2xl leading-tight font-bold sm:text-[1.75rem]"
+                >
+                  {service.title}
+                </h3>
+                <p class="mt-3 text-lg text-muted">{service.summary}</p>
+
+                <div class="mt-6 rounded-lg bg-paper-alt p-5">
+                  <h4 class="eyebrow">{expertise.labels.problem}</h4>
+                  <p class="mt-2">{service.problem}</p>
+                </div>
+              </div>
+
+              <div class="grid gap-8 sm:grid-cols-2">
+                <div>
+                  <h4 class="eyebrow">{expertise.labels.interventions}</h4>
+                  <ul class="mt-4 space-y-2.5" role="list">
+                    {service.interventions.map((item) => (
+                      <li class="flex gap-3 text-[0.9375rem] leading-snug">
+                        <span
+                          class="mt-[0.45rem] size-1.5 flex-none rounded-full bg-teal"
+                          aria-hidden="true"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="eyebrow">{expertise.labels.deliverables}</h4>
+                  <ul class="mt-4 space-y-2.5" role="list">
+                    {service.deliverables.map((item) => (
+                      <li class="flex gap-3 text-[0.9375rem] leading-snug">
+                        <Check
+                          class="mt-0.5 size-4 flex-none text-teal-ink"
+                          aria-hidden="true"
+                          stroke-width={2.25}
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="border-t border-line pt-6 sm:col-span-2">
+                  <h4 class="eyebrow">{expertise.labels.outcome}</h4>
+                  <p class="mt-2 text-lg font-semibold">{service.outcome}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <p class="mt-8 max-w-3xl text-sm text-muted">{expertise.boundaryNote}</p>
+  </div>
+</section>

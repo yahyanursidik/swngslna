@@ -1,0 +1,110 @@
+---
+import '@fontsource-variable/manrope/wght.css';
+import manropeLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import '@/styles/global.css';
+import { SITE, isContactReady } from '@/config/site';
+import { LOCALES, LOCALE_META, homePath, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  ogImage: string;
+  ogImageAlt: string;
+  /** Emit canonical + hreflang alternates for the localized homepages. */
+  localizedHome?: boolean;
+  /** Force noindex regardless of environment (e.g. 404, root redirect). */
+  noindex?: boolean;
+  /** Extra JSON-LD objects for this page. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  locale,
+  title,
+  description,
+  ogImage,
+  ogImageAlt,
+  localizedHome = false,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+// Launch gate (PRD §14, FR-09): never ship a production build without approved contact links.
+if (__SITE_PRODUCTION__ && !isContactReady()) {
+  throw new Error(
+    '[STS] Production build blocked: set an approved email and/or WhatsApp number in src/config/site.ts.',
+  );
+}
+
+const robots = !__SITE_PRODUCTION__ || noindex ? 'noindex, nofollow' : 'index, follow';
+const site = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(localizedHome ? homePath(locale) : Astro.url.pathname, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
+const meta = LOCALE_META[locale];
+---
+
+<!doctype html>
+<html lang={meta.htmlLang} dir="ltr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f7f7f3" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="canonical" href={canonical} />
+    {localizedHome &&
+      LOCALES.map((l) => (
+        <link
+          rel="alternate"
+          hreflang={LOCALE_META[l].hreflang}
+          href={new URL(homePath(l), site).href}
+        />
+      ))}
+    {localizedHome && (
+      <link rel="alternate" hreflang="x-default" href={new URL(homePath('id'), site).href} />
+    )}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`${SITE.shortName} — ${SITE.fullName}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={meta.ogLocale} />
+    {localizedHome &&
+      LOCALES.filter((l) => l !== locale).map((l) => (
+        <meta property="og:locale:alternate" content={LOCALE_META[l].ogLocale} />
+      ))}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    {jsonLd.map((data) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
+  </head>
+  <body class="min-h-dvh antialiased">
+    <slot />
+  </body>
+</html>

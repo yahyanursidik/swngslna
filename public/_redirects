@@ -1,0 +1,3 @@
+# Root → default locale. Host-side permanent redirect (PRD §6).
+/        /id/     301!
+/index.html  /id/  301!

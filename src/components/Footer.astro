@@ -1,0 +1,136 @@
+---
+import ArrowUp from '@lucide/astro/icons/arrow-up';
+import Wordmark from './ui/Wordmark.astro';
+import { SITE } from '@/config/site';
+import { LOCALES, LOCALE_META, SECTION, homePath, type Dictionary } from '@/i18n';
+import { emailHref, whatsappDisplay, whatsappHref } from '@/lib/contact';
+import { getNavItems } from '@/lib/nav';
+import { ahuDate } from '@/lib/legal';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const { footer } = t;
+const navItems = getNavItems(t);
+const mailto = emailHref(t);
+const wa = whatsappHref(t);
+const year = new Date().getFullYear();
+---
+
+<footer class="surface-dark border-t border-white/10 bg-navy-deep pt-16 pb-10">
+  <div class="container-content">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div>
+        <p class="text-4xl leading-none">
+          <Wordmark />
+        </p>
+        <p class="mt-4 font-semibold">{SITE.fullName}</p>
+        <p class="mt-1 text-mist" lang="en">
+          {footer.tagline}
+        </p>
+      </div>
+
+      <nav aria-labelledby="footer-nav-title">
+        <h2 id="footer-nav-title" class="eyebrow">
+          {footer.navTitle}
+        </h2>
+        <ul class="mt-4 space-y-2 text-[0.9375rem]" role="list">
+          {navItems.map((item) => (
+            <li>
+              <a href={`#${item.id}`} class="text-mist no-underline hover:text-paper">
+                {item.label}
+              </a>
+            </li>
+          ))}
+          {LOCALES.filter((l) => l !== t.locale).map((l) => (
+            <li>
+              <a
+                href={homePath(l)}
+                hreflang={LOCALE_META[l].hreflang}
+                lang={LOCALE_META[l].htmlLang}
+                class="text-mist no-underline hover:text-paper"
+                data-lang-switch
+              >
+                {LOCALE_META[l].name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="eyebrow">{footer.contactTitle}</h2>
+        <ul class="mt-4 space-y-2 text-[0.9375rem]" role="list">
+          {mailto && (
+            <li>
+              <a href={mailto} class="link-underline break-all text-mist hover:text-paper">
+                {SITE.contact.email}
+              </a>
+            </li>
+          )}
+          {wa && (
+            <li>
+              <a
+                href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-underline text-mist hover:text-paper"
+              >
+                WhatsApp {whatsappDisplay()}
+                <span class="sr-only">{t.a11y.opensInNewTab}</span>
+              </a>
+            </li>
+          )}
+          {SITE.sameAs.map((url) => (
+            <li>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-underline text-mist hover:text-paper"
+              >
+                {new URL(url).hostname.replace(/^www\./, '')}
+                <span class="sr-only">{t.a11y.opensInNewTab}</span>
+              </a>
+            </li>
+          ))}
+          {!mailto && !wa && (
+            <li>
+              <a href={`#${SECTION.contact}`} class="text-mist no-underline hover:text-paper">
+                {t.nav.contact}
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow">{footer.legalTitle}</h2>
+        <p class="mt-4 text-[0.9375rem] font-semibold">{SITE.legalName}</p>
+        {SITE.legal.showAhu && (
+          <p class="mt-2 text-sm text-mist">
+            {footer.ahuLabel}
+            <span class="block font-semibold break-words text-paper">{SITE.legal.ahuNumber}</span>
+            <span class="block">{ahuDate(t.locale)}</span>
+          </p>
+        )}
+        <p class="mt-4 text-sm leading-relaxed text-mist-dim">{footer.privacyNote}</p>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-mist-dim sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {year} {SITE.legalName}. {footer.rights}
+      </p>
+      <a
+        href={`#${SECTION.top}`}
+        class="inline-flex items-center gap-2 self-start font-semibold text-mist no-underline hover:text-paper sm:self-auto"
+      >
+        {footer.backToTop}
+        <ArrowUp class="size-4" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</footer>

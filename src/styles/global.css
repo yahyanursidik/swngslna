@@ -1,35 +1,35 @@
 @import 'tailwindcss';
 
 /*
- * STS design tokens (PRD §12).
+ * STS design tokens (PRD §12), aligned to the approved logo (brand/).
  * Contrast notes (against paper #F7F7F3 unless stated):
- *   navy  #142933  ~14.9:1  body text, dark surfaces
- *   muted #4A5B62  ~6.6:1   secondary text
- *   teal-ink #3B6D68 ~5.5:1 accent text, buttons (paper text on it ~5.5:1)
- *   teal  #477F7A  ~4.3:1   large text / graphics only
- *   teal-soft #9CCBC5 on navy ~9:1  accent text on dark surfaces
- *   mist / sand: separators and rare highlights, never body text on paper
+ *   navy  #16354F  ~11.8:1  body text, dark surfaces (deeper shade of logo navy #184261)
+ *   muted #4A5A66  ~6.6:1   secondary text
+ *   teal-ink #3A6C7D ~5.4:1 accent text, buttons (white text on it ~5.8:1)
+ *   teal  #447C8E  ~4.3:1   logo teal — large text / graphics only
+ *   teal-soft #A7CBD6 on navy ~7.4:1  accent text on dark surfaces
+ *   mist / sand: separators and highlights, never body text on paper
  */
 @theme {
   --font-sans:
     'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     sans-serif;
 
-  --color-navy: #142933;
-  --color-navy-deep: #0e1f27;
-  --color-navy-soft: #1d3641;
+  --color-navy: #16354f;
+  --color-navy-deep: #0f263a;
+  --color-navy-soft: #1f4562;
   --color-paper: #f7f7f3;
-  --color-paper-alt: #eef1ec;
+  --color-paper-alt: #eef1f0;
   --color-white: #ffffff;
-  --color-muted: #4a5b62;
-  --color-teal: #477f7a;
-  --color-teal-ink: #3b6d68;
-  --color-teal-deep: #2f5955;
-  --color-teal-soft: #9ccbc5;
-  --color-mist: #beced0;
-  --color-mist-dim: #a9bcc0;
-  --color-line: #dbe3e2;
-  --color-sand: #daaa72;
+  --color-muted: #4a5a66;
+  --color-teal: #447c8e;
+  --color-teal-ink: #3a6c7d;
+  --color-teal-deep: #2f5a69;
+  --color-teal-soft: #a7cbd6;
+  --color-mist: #bfd0d6;
+  --color-mist-dim: #a9bec6;
+  --color-line: #dbe3e4;
+  --color-sand: #e1b373;
 
   --container-content: 75rem; /* ~1200px */
 

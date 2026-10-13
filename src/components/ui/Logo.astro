@@ -1,0 +1,29 @@
+---
+/** Horizontal lockup: mark + "Sawangsulna / Teknologi Studio" (approved logo, brand/). */
+import Mark from './Mark.astro';
+import { SITE } from '@/config/site';
+
+interface Props {
+  tone?: 'light' | 'dark';
+  size?: 'sm' | 'lg';
+  class?: string;
+}
+
+const { tone = 'light', size = 'sm', class: className } = Astro.props;
+const [first, ...rest] = SITE.fullName.split(' ');
+---
+
+<span class:list={['inline-flex items-center', size === 'lg' ? 'gap-4' : 'gap-3', className]}>
+  <Mark tone={tone} class={size === 'lg' ? 'h-12 w-auto' : 'h-9 w-auto'} />
+  <span
+    class:list={[
+      'flex flex-col leading-[1.05] tracking-[-0.01em]',
+      size === 'lg' ? 'text-[1.375rem]' : 'text-[0.9375rem]',
+      tone === 'dark' ? 'text-paper' : 'text-navy',
+    ]}
+    aria-hidden="true"
+  >
+    <span class="font-extrabold">{first}</span>
+    <span class="font-medium">{rest.join(' ')}</span>
+  </span>
+</span>

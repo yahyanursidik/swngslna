@@ -1,0 +1,160 @@
+---
+/**
+ * Fragmented vs. connected learning. Original diagram; the sand dot is the learner,
+ * echoing the dot in the STS mark. Labels are HTML (crisp and localizable).
+ */
+import type { TitledText } from '@/i18n';
+
+interface Props {
+  before: TitledText;
+  after: TitledText;
+}
+
+const { before, after } = Astro.props;
+
+const scattered = [
+  { x: 26, y: 30, r: -8 },
+  { x: 128, y: 22, r: 6 },
+  { x: 160, y: 104, r: -5 },
+  { x: 28, y: 128, r: 9 },
+  { x: 112, y: 178, r: -11 },
+  { x: 22, y: 206, r: 4 },
+];
+const path = [
+  { x: 330, y: 186 },
+  { x: 402, y: 132 },
+  { x: 466, y: 84 },
+];
+---
+
+<figure class="w-full">
+  <svg viewBox="0 0 520 262" class="h-auto w-full" aria-hidden="true" focusable="false">
+    <defs>
+      <marker
+        id="ch-arrow"
+        viewBox="0 0 10 10"
+        refX="7"
+        refY="5"
+        markerWidth="7"
+        markerHeight="7"
+        orient="auto-start-reverse"
+      >
+        <path d="M1 1L8 5L1 9" fill="none" stroke="var(--color-teal-ink)" stroke-width="1.8"></path>
+      </marker>
+    </defs>
+
+    <!-- Before: fragmented -->
+    <rect
+      x="1"
+      y="1"
+      width="226"
+      height="260"
+      rx="16"
+      fill="var(--color-white)"
+      stroke="var(--color-line)"
+    ></rect>
+    <g stroke="var(--color-mist-dim)" stroke-width="1.5" stroke-dasharray="3 5" fill="none">
+      <path d="M78 46 L120 40"></path>
+      <path d="M182 122 L176 160"></path>
+      <path d="M58 152 L70 178"></path>
+      <path d="M150 56 Q170 70 166 92"></path>
+    </g>
+    {scattered.map((t) => (
+      <g transform={`translate(${t.x} ${t.y}) rotate(${t.r} 24 15)`}>
+        <rect
+          width="48"
+          height="30"
+          rx="6"
+          fill="var(--color-paper)"
+          stroke="var(--color-mist-dim)"
+        />
+        <path
+          d="M9 11H36M9 19H28"
+          stroke="var(--color-mist-dim)"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </g>
+    ))}
+    <circle
+      cx="112"
+      cy="128"
+      r="20"
+      fill="none"
+      stroke="var(--color-sand)"
+      stroke-width="1.5"
+      stroke-dasharray="2 4"
+    ></circle>
+    <circle cx="112" cy="128" r="8" fill="var(--color-sand)"></circle>
+
+    <!-- Transition -->
+    <path
+      d="M238 131H280"
+      stroke="var(--color-teal-ink)"
+      stroke-width="2"
+      stroke-linecap="round"
+      marker-end="url(#ch-arrow)"
+    ></path>
+
+    <!-- After: connected path -->
+    <rect
+      x="292"
+      y="1"
+      width="227"
+      height="260"
+      rx="16"
+      fill="var(--color-white)"
+      stroke="var(--color-line)"
+    ></rect>
+    <path
+      d="M318 222 C318 196 322 186 330 186 C370 186 372 132 402 132 C436 132 440 84 466 84 C486 84 492 70 492 52"
+      fill="none"
+      stroke="var(--color-teal)"
+      stroke-width="4"
+      stroke-linecap="round"
+    ></path>
+    {path.map((p, i) => (
+      <g transform={`translate(${p.x - 24} ${p.y - 15})`}>
+        <rect
+          width="48"
+          height="30"
+          rx="6"
+          fill="var(--color-white)"
+          stroke="var(--color-teal)"
+          stroke-width="1.5"
+        />
+        <text
+          x="24"
+          y="20"
+          text-anchor="middle"
+          font-size="13"
+          font-weight="700"
+          fill="var(--color-teal-ink)"
+        >
+          {String(i + 1).padStart(2, '0')}
+        </text>
+      </g>
+    ))}
+    <circle cx="318" cy="226" r="8" fill="var(--color-sand)"></circle>
+    <circle cx="492" cy="40" r="17" fill="var(--color-navy)"></circle>
+    <path
+      d="M484 40l5.5 5.5L501 34"
+      fill="none"
+      stroke="var(--color-paper)"
+      stroke-width="2.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    ></path>
+  </svg>
+
+  <figcaption class="mt-4 grid grid-cols-[44%_44%] justify-between text-sm">
+    <span>
+      <span class="block font-bold text-muted">{before.title}</span>
+      <span class="mt-0.5 block text-muted">{before.text}</span>
+    </span>
+    <span>
+      <span class="block font-bold text-teal-ink">{after.title}</span>
+      <span class="mt-0.5 block text-muted">{after.text}</span>
+    </span>
+  </figcaption>
+</figure>

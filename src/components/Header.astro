@@ -1,8 +1,7 @@
 ---
 import Menu from '@lucide/astro/icons/menu';
 import X from '@lucide/astro/icons/x';
-import Wordmark from './ui/Wordmark.astro';
-import { SITE } from '@/config/site';
+import Logo from './ui/Logo.astro';
 import { LOCALES, LOCALE_META, SECTION, homePath, type Dictionary } from '@/i18n';
 import { getNavItems } from '@/lib/nav';
 
@@ -29,13 +28,10 @@ const current = t.locale;
   <div class="container-content flex h-[4.5rem] items-center justify-between gap-6">
     <a
       href={`#${SECTION.top}`}
-      class="group flex items-baseline gap-3 rounded-sm text-navy no-underline"
+      class="flex items-center rounded-sm no-underline"
       aria-label={t.a11y.home}
     >
-      <Wordmark class="text-[1.75rem] leading-none" />
-      <span class="hidden text-sm font-medium text-muted sm:inline lg:hidden xl:inline">
-        {SITE.fullName}
-      </span>
+      <Logo />
     </a>
 
     <nav aria-label={t.a11y.primaryNav} class="flex items-center">

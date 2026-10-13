@@ -1,6 +1,6 @@
 ---
 import ArrowUp from '@lucide/astro/icons/arrow-up';
-import Wordmark from './ui/Wordmark.astro';
+import Logo from './ui/Logo.astro';
 import { SITE } from '@/config/site';
 import { LOCALES, LOCALE_META, SECTION, homePath, type Dictionary } from '@/i18n';
 import { emailHref, whatsappDisplay, whatsappHref } from '@/lib/contact';
@@ -23,11 +23,9 @@ const year = new Date().getFullYear();
   <div class="container-content">
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
       <div>
-        <p class="text-4xl leading-none">
-          <Wordmark />
-        </p>
-        <p class="mt-4 font-semibold">{SITE.fullName}</p>
-        <p class="mt-1 text-mist" lang="en">
+        <Logo tone="dark" size="lg" />
+        <p class="sr-only">{SITE.fullName}</p>
+        <p class="mt-5 text-mist" lang="en">
           {footer.tagline}
         </p>
       </div>

@@ -1,6 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#142933"/>
-  <text x="29" y="45" font-family="Manrope, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="38" font-weight="800"
-    fill="#F7F7F3" text-anchor="middle" letter-spacing="-1">S</text>
-  <circle cx="46" cy="42" r="4.2" fill="#9CCBC5"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14.08" fill="#FBF9F5"/>
+  <svg viewBox="198 320 858 554" x="5.120000000000001" y="15.283916083916086" width="53.76" height="34.71">
+  <defs>
+    <linearGradient id="m-a-l" gradientUnits="userSpaceOnUse" x1="204" y1="0" x2="420" y2="0">
+      <stop offset="0" stop-color="#3a6f84"/>
+      <stop offset="1" stop-color="#184261"/>
+    </linearGradient>
+    <linearGradient id="m-a-r" gradientUnits="userSpaceOnUse" x1="696" y1="0" x2="915" y2="0">
+      <stop offset="0" stop-color="#184261"/>
+      <stop offset="1" stop-color="#3f7587"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#m-a-l)" d="M440 609C519 609 562 654 562 739C562 824 519 869 440 869H204V860C204 810 240 772 290 772H427A31.5 31.5 0 0 0 427 709H440Z"/>
+  <path fill="#184261" d="M696 440V869H690C630 869 594 832 594 772V539H343A35 35 0 0 0 343 609H440V709H336A134 134 0 0 1 336 440Z"/>
+  <path fill="url(#m-a-r)" d="M688 772H920V869H688Z"/>
+  <path fill="#447c8e" d="M728 440H1040Q1046 440 1046 446C1046 500 1012 539 960 539H728Z"/>
+  <path fill="#3f7587" d="M730 608H915C1003 608 1051 654 1051 739C1051 824 1003 869 915 869H900V772H897A31 31 0 0 0 897 709H810C760 709 730 682 730 640Z"/>
+  <path fill="#184261" d="M696 440V869H690C630 869 594 832 594 772V440Z"/>
+  <circle fill="#e1b373" cx="648" cy="375" r="51"/>
+</svg>
 </svg>

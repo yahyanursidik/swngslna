@@ -150,9 +150,18 @@ After the first production deploy:
 Manual checks still required before launch (PRD §17): keyboard-only pass, a screen-reader spot
 check, 200% browser zoom, `prefers-reduced-motion`, and recent Chrome/Firefox/Safari/Edge.
 
-## 7. Design tokens
+## 7. Logo & illustrations
 
-Defined in `src/styles/global.css` (`@theme`). Base palette from PRD §12, with two AA-driven
-additions: `teal-ink #3B6D68` for accent **text** and buttons on light backgrounds (the PRD teal
-`#477F7A` is ~4.3:1 on off-white, below AA for body text) and `teal-soft #9CCBC5` for accents on
-navy. Sand is used only for rules and highlights, never for body text on light surfaces.
+- Approved source files: `brand/sts-logo-icon-source.webp`, `brand/sts-logo-horizontal-source.png`.
+- The mark is redrawn as vector data in `src/lib/brand.ts` (single source). It renders inline via
+  `src/components/ui/Mark.astro` / `Logo.astro` (light and dark variants) and feeds
+  `npm run assets`, which regenerates the favicons, app icons, `logo-512.png` and OG images.
+- Section illustrations are original inline SVGs in `src/components/figures/` (Challenges, Platform,
+  AI & Learning). Their labels come from the dictionaries, so they are localized and type-checked.
+
+## 8. Design tokens
+
+Defined in `src/styles/global.css` (`@theme`), aligned to the approved logo colors (navy
+`#16354F`, logo teal `#447C8E`, sand `#E1B373`). AA-driven additions: `teal-ink #3A6C7D` for accent
+**text** and buttons on light backgrounds (logo teal is ~4.3:1 on off-white) and `teal-soft #A7CBD6`
+for accents on navy. Sand is used only for rules and highlights, never for body text on light surfaces.

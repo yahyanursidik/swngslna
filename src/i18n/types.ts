@@ -111,6 +111,7 @@ export interface Dictionary {
   };
 
   challenges: SectionHeading & {
+    figure: { before: TitledText; after: TitledText };
     items: TitledText[];
     closing: string;
   };
@@ -128,6 +129,11 @@ export interface Dictionary {
 
   platform: SectionHeading & {
     body: string[];
+    figure: {
+      caption: string;
+      center: [string, string];
+      steps: [string, string, string, string];
+    };
     valuesTitle: string;
     values: TitledText[];
     capabilitiesTitle: string;
@@ -149,6 +155,11 @@ export interface Dictionary {
   };
 
   ai: SectionHeading & {
+    figure: {
+      caption: string;
+      governance: string;
+      steps: [string, string, string, string];
+    };
     useCasesTitle: string;
     useCases: TitledText[];
     guardrailsTitle: string;

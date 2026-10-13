@@ -19,7 +19,7 @@ const en: Dictionary = {
     languageSwitch: 'Choose language',
     switchToLanguage: 'Read this page in Indonesian',
     opensInNewTab: '(opens in a new tab)',
-    home: 'STS. home',
+    home: 'Sawangsulna Teknologi Studio (STS) — home',
   },
 
   nav: {
@@ -82,6 +82,10 @@ const en: Dictionary = {
   challenges: {
     eyebrow: 'Challenges',
     title: 'A Platform Alone Is Not Enough',
+    figure: {
+      before: { title: 'Fragmented', text: 'Scattered content; learners unsure where to begin.' },
+      after: { title: 'Connected & guided', text: 'One clear learning path toward capability.' },
+    },
     lead: 'Many organizations have already invested in an LMS or digital content, yet the effect on capability remains unclear. These are the patterns we see most often:',
     items: [
       {
@@ -243,6 +247,11 @@ const en: Dictionary = {
   platform: {
     eyebrow: 'Custom Platforms',
     title: 'Learning Platforms Designed for Adult Learners',
+    figure: {
+      caption: 'The adult learning cycle: it starts from the role and returns to the work.',
+      center: ['Role &', 'competency'],
+      steps: ['Learn', 'Practice', 'Reflect', 'Apply'],
+    },
     lead: 'Beyond implementing existing LMS products, we develop custom learning platforms for the internal needs of institutions and companies—built around how adults learn at work, not around a feature list.',
     body: [
       'Adult learners bring experience, responsibilities and limited time. They learn best when material is directly relevant to their work, when they have room to choose their path, and when they can practice and reflect on the results.',
@@ -382,6 +391,11 @@ const en: Dictionary = {
   ai: {
     eyebrow: 'AI & Learning',
     title: 'Learning in the AI Era',
+    figure: {
+      caption: 'AI drafts from approved sources; people review, revise and decide.',
+      governance: 'GOVERNANCE & GUARDRAILS',
+      steps: ['Approved sources', 'AI draft', 'Human review', 'Ready to use'],
+    },
     lead: 'AI can speed up design work and enrich learning experiences, but it does not replace educators, facilitators or sound instructional practice. We treat it as a tool, chosen with care.',
     useCasesTitle: 'Use cases we support',
     useCases: [

@@ -1,0 +1,18 @@
+---
+import { MARK_PALETTE, markSvg, nextMarkId } from '@/lib/brand';
+
+interface Props {
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { tone = 'light', class: className = '' } = Astro.props;
+// Unique gradient ids per instance (header and footer render on the same page).
+const id = `sts-mark-${nextMarkId()}`;
+const svg = markSvg(MARK_PALETTE[tone], {
+  id,
+  attrs: `class="${className}" aria-hidden="true" focusable="false"`,
+});
+---
+
+<Fragment set:html={svg} />

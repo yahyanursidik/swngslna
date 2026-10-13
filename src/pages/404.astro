@@ -5,7 +5,7 @@
  * Without JavaScript both versions are shown.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Wordmark from '@/components/ui/Wordmark.astro';
+import Logo from '@/components/ui/Logo.astro';
 import { SITE } from '@/config/site';
 import { LOCALES, LOCALE_META, getDictionary, homePath } from '@/i18n';
 
@@ -22,8 +22,8 @@ const id = getDictionary('id');
 >
   <header class="border-b border-line">
     <div class="container-content flex h-[4.5rem] items-center">
-      <a href="/id/" class="text-[1.75rem] leading-none text-navy no-underline" data-home-link>
-        <Wordmark />
+      <a href="/id/" class="rounded-sm no-underline" data-home-link>
+        <Logo />
         <span class="sr-only">
           {SITE.shortName} — {SITE.fullName}
         </span>

@@ -2,6 +2,7 @@
 import ShieldCheck from '@lucide/astro/icons/shield-check';
 import Info from '@lucide/astro/icons/info';
 import SectionHeading from './ui/SectionHeading.astro';
+import AIFigure from './figures/AIFigure.astro';
 import { SECTION, type Dictionary } from '@/i18n';
 
 interface Props {
@@ -14,7 +15,14 @@ const { ai } = t;
 
 <section id={SECTION.ai} class="section bg-paper-alt" aria-labelledby="ai-title">
   <div class="container-content">
-    <SectionHeading id="ai-title" eyebrow={ai.eyebrow} title={ai.title} lead={ai.lead} />
+    <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+      <SectionHeading id="ai-title" eyebrow={ai.eyebrow} title={ai.title} lead={ai.lead} />
+      <AIFigure
+        caption={ai.figure.caption}
+        governance={ai.figure.governance}
+        steps={ai.figure.steps}
+      />
+    </div>
 
     <div class="mt-14 grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
       <div>

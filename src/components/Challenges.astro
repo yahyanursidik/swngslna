@@ -1,5 +1,6 @@
 ---
 import SectionHeading from './ui/SectionHeading.astro';
+import ChallengesFigure from './figures/ChallengesFigure.astro';
 import { SECTION, type Dictionary } from '@/i18n';
 
 interface Props {
@@ -12,12 +13,15 @@ const { challenges } = t;
 
 <section id={SECTION.challenges} class="section bg-paper-alt" aria-labelledby="challenges-title">
   <div class="container-content">
-    <SectionHeading
-      id="challenges-title"
-      eyebrow={challenges.eyebrow}
-      title={challenges.title}
-      lead={challenges.lead}
-    />
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
+      <SectionHeading
+        id="challenges-title"
+        eyebrow={challenges.eyebrow}
+        title={challenges.title}
+        lead={challenges.lead}
+      />
+      <ChallengesFigure before={challenges.figure.before} after={challenges.figure.after} />
+    </div>
 
     <ol
       class="mt-12 grid gap-x-10 border-t border-navy/15 sm:grid-cols-2 lg:grid-cols-3"

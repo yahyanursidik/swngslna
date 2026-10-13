@@ -19,7 +19,7 @@ const id: Dictionary = {
     languageSwitch: 'Pilih bahasa',
     switchToLanguage: 'Baca halaman ini dalam bahasa Inggris',
     opensInNewTab: '(membuka tab baru)',
-    home: 'STS. beranda',
+    home: 'Sawangsulna Teknologi Studio (STS) — beranda',
   },
 
   nav: {
@@ -82,6 +82,16 @@ const id: Dictionary = {
   challenges: {
     eyebrow: 'Tantangan',
     title: 'Platform Saja Tidak Cukup',
+    figure: {
+      before: {
+        title: 'Terfragmentasi',
+        text: 'Materi tersebar, peserta tidak tahu harus mulai dari mana.',
+      },
+      after: {
+        title: 'Terhubung & terarah',
+        text: 'Satu alur belajar yang jelas menuju kompetensi.',
+      },
+    },
     lead: 'Banyak organisasi sudah berinvestasi pada LMS atau konten digital, tetapi dampaknya terhadap kompetensi belum terlihat. Pola yang paling sering kami temui:',
     items: [
       {
@@ -240,6 +250,11 @@ const id: Dictionary = {
   platform: {
     eyebrow: 'Platform Khusus',
     title: 'Platform Belajar yang Dirancang untuk Pembelajar Dewasa',
+    figure: {
+      caption: 'Siklus belajar orang dewasa: berangkat dari peran, kembali ke pekerjaan.',
+      center: ['Peran &', 'kompetensi'],
+      steps: ['Belajar', 'Praktik', 'Refleksi', 'Terapkan'],
+    },
     lead: 'Selain mengimplementasikan LMS yang sudah ada, kami mengembangkan platform pembelajaran khusus untuk kebutuhan internal lembaga dan korporasi—dibangun di sekitar cara orang dewasa belajar di tempat kerja, bukan di sekitar daftar fitur.',
     body: [
       'Pembelajar dewasa membawa pengalaman, tanggung jawab, dan waktu yang terbatas. Mereka belajar paling baik ketika materi langsung relevan dengan pekerjaan, ketika diberi ruang untuk menentukan jalur, dan ketika ada kesempatan untuk berlatih lalu merefleksikan hasilnya.',
@@ -379,6 +394,11 @@ const id: Dictionary = {
   ai: {
     eyebrow: 'AI & Pembelajaran',
     title: 'Pembelajaran di Era AI',
+    figure: {
+      caption: 'AI menyusun draf dari sumber resmi; manusia meninjau, merevisi, dan memutuskan.',
+      governance: 'TATA KELOLA & BATASAN',
+      steps: ['Sumber resmi', 'Draf AI', 'Tinjauan manusia', 'Siap dipakai'],
+    },
     lead: 'AI dapat mempercepat pekerjaan desain dan memperkaya pengalaman belajar, tetapi tidak menggantikan pendidik, fasilitator, maupun praktik instruksional yang baik. Kami memosisikannya sebagai alat bantu yang dipilih dengan hati-hati.',
     useCasesTitle: 'Contoh pemanfaatan yang kami dampingi',
     useCases: [
